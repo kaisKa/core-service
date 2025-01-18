@@ -1,0 +1,43 @@
+server:
+  port: 7777
+spring:
+  application.name: Core-Service
+  datasource:
+    postgresql:
+      jdbc-url: jdbc:postgresql://localhost:5432/mydb
+      username: user
+      password: password
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # MongoDB Configuration
+#  data:
+#    mongodb:
+##      uri: mongodb://admin:password@localhost:27017/configdb?authSource=admin
+#      host: localhost
+#      port: 27017
+#      database: configdb
+#      username: admin
+#      password: password
+#      authentication-database: configdb
+
+
+
+#    database: configdb
+#    authentication-database: admin
+springdoc:
+  openapi:
+    api-docs:
+      path: /api-docs
+      enabled: true
+    swagger-ui:
+      path: /swagger-ui.html
+      enabled: true
+
+
+
+# add logging later on
