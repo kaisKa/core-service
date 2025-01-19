@@ -1,4 +1,4 @@
-package com.core.Core.Service.data_loading.entity;
+package com.core.Core.Service.data_loading.document;
 
 
 

@@ -1,6 +1,6 @@
 package com.core.Core.Service.data_loading;
 
-import com.core.Core.Service.data_loading.entity.ServiceConfiguration;
+import com.core.Core.Service.data_loading.document.ServiceConfiguration;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

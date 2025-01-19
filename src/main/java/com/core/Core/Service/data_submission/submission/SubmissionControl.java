@@ -60,7 +60,7 @@ public class SubmissionControl {
     public ResponseEntity<ApiResponse> getByService(
             @RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
-            @RequestParam @Parameter(required = false, description = "add the field name to sort by") String sortField,
+            @RequestParam(required = false) @Parameter(required = false, description = "add the field name to sort by") String sortField,
             @PathVariable BigInteger serviceId){
 
         List<Submission> sub = service

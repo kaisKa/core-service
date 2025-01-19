@@ -1,6 +1,6 @@
 package com.core.Core.Service.data_loading;
 
-import com.core.Core.Service.data_loading.entity.ServiceConfiguration;
+import com.core.Core.Service.data_loading.document.ServiceConfiguration;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

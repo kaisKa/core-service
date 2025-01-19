@@ -2,7 +2,7 @@ package com.core.Core.Service.data_submission.submission.validation;
 
 import jakarta.validation.ConstraintValidatorContext;
 import com.core.Core.Service.data_loading.ServiceConfigurationService;
-import com.core.Core.Service.data_loading.entity.ServiceConfiguration;
+import com.core.Core.Service.data_loading.document.ServiceConfiguration;
 import com.core.Core.Service.data_submission.submission.SubmissionDto;
 import jakarta.validation.ConstraintValidator;
 import org.springframework.util.StringUtils;

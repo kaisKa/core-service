@@ -2,7 +2,7 @@ package com.core.Core.Service.data_loading;
 
 
 import com.core.Core.Service.common.dto.ApiResponse;
-import com.core.Core.Service.data_loading.entity.ServiceConfiguration;
+import com.core.Core.Service.data_loading.document.ServiceConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

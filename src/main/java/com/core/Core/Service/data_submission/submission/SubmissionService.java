@@ -1,24 +1,34 @@
 package com.core.Core.Service.data_submission.submission;
 
 import com.core.Core.Service.data_submission.costomer.CustomerService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 
 @Service
+@Log4j2
 public class SubmissionService {
 
     private final SubmissionRepository repository;
 
     private final CustomerService service;
 
-    public SubmissionService(SubmissionRepository repository, CustomerService service) {
+    private final KafkaTemplate kafkaTemplate;
+
+    private String TOPIC = "submissions";
+
+    public SubmissionService(SubmissionRepository repository, CustomerService service, KafkaTemplate kafkaTemplate) {
         this.repository = repository;
         this.service = service;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     /**
@@ -41,9 +51,10 @@ public class SubmissionService {
                 .build();
         var savedSub = repository.save(submission);
 
-        if (savedSub != null) {
+        if (savedSub.getServiceId() != null) {
 
-            //TODO: publish an event
+            kafkaTemplate.send(TOPIC,savedSub.getServiceId().toString(),savedSub).whenComplete((d,a) -> log.info("Event published {}",savedSub));
+
         }
         return savedSub;
 
@@ -62,6 +73,8 @@ public class SubmissionService {
 
         return repository.findByCustomerId(customerId,page);
     }
+
+
 
 }
 

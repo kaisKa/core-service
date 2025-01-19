@@ -1,8 +1,7 @@
 package com.core.Core.Service.data_loading;
 
-import com.core.Core.Service.data_loading.entity.ServiceConfiguration;
+import com.core.Core.Service.data_loading.document.ServiceConfiguration;
 import com.core.Core.Service.exceptions.NotFoundException;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;

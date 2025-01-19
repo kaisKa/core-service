@@ -1,7 +1,6 @@
 package com.core.Core.Service.data_loading;
 
 import aj.org.objectweb.asm.TypeReference;
-import com.core.Core.Service.data_loading.entity.ServiceConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

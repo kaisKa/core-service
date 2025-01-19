@@ -14,6 +14,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  kafka:
+    bootstrap-servers: localhost:9092
   # MongoDB Configuration
 #  data:
 #    mongodb:
@@ -37,6 +40,8 @@ springdoc:
     swagger-ui:
       path: /swagger-ui.html
       enabled: true
+
+
 
 
 
