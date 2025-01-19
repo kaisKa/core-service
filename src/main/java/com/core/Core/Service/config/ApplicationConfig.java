@@ -1,5 +1,6 @@
 package com.core.Core.Service.config;
 
+import com.core.Core.Service.data_submission.audit.AuditRepository;
 import com.core.Core.Service.data_submission.costomer.CustomerRepository;
 import com.core.Core.Service.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +43,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<AccessLoggingFilter> loggingFilter() {
+    public FilterRegistrationBean<AccessLoggingFilter> loggingFilter(AuditRepository repository) {
         FilterRegistrationBean<AccessLoggingFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new AccessLoggingFilter());
+        registrationBean.setFilter(new AccessLoggingFilter(repository));
         registrationBean.addUrlPatterns("/api/*");
         registrationBean.setOrder(4);// Apply to specific URL patterns, or use "/*" for all URLs
         return registrationBean;
