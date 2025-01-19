@@ -3,6 +3,7 @@ package com.core.Core.Service.data_submission.submission;
 import com.core.Core.Service.common.dto.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,17 +17,18 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/api/submission")
-public class SubmissionControl {
+public class SubmissionController {
 
     private final SubmissionService service;
 
-    public SubmissionControl(SubmissionService service) {
+    public SubmissionController(SubmissionService service) {
         this.service = service;
     }
 
     @PostMapping
     @Operation(description = "Endpoint to submit a form")
-    public ResponseEntity<ApiResponse> submit(@Valid @RequestBody SubmissionDto submissionDto){
+    @SecurityRequirement(name = "BearerAuth")
+    public ResponseEntity<ApiResponse> submit(@Valid @RequestBody SubmissionDto submissionDto) {
 
         Submission sub = service.submit(submissionDto);
 
@@ -42,9 +44,15 @@ public class SubmissionControl {
 
     @GetMapping
     @Operation(description = "Endpoint to get all submissions")
+    @SecurityRequirement(name = "BearerAuth")
     public ResponseEntity<ApiResponse> getAll(@RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
-                                              @RequestParam(name = "pageSize", defaultValue = "10") int pageSize){
-        Page<Submission> submissions = service.getAll(PageRequest.of(pageNum, pageSize));
+                                              @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
+                                              @RequestParam(required = false) @Parameter(required = false, description = "add the field name to sort by") String sortField) {
+        var page = PageRequest.of(pageNum, pageSize);
+        if (sortField != null)
+            page.withSort(Sort.by(Sort.Order.by(sortField)));
+
+        Page<Submission> submissions = service.getAll(page);
 
         ApiResponse resp = ApiResponse.builder()
                 .status(HttpStatus.OK)
@@ -57,14 +65,15 @@ public class SubmissionControl {
 
     @GetMapping("/{serviceId}")
     @Operation(description = "Endpoint to get all submissions for a specific service")
+    @SecurityRequirement(name = "BearerAuth")
     public ResponseEntity<ApiResponse> getByService(
             @RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
             @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
             @RequestParam(required = false) @Parameter(required = false, description = "add the field name to sort by") String sortField,
-            @PathVariable BigInteger serviceId){
+            @PathVariable BigInteger serviceId) {
 
         List<Submission> sub = service
-                .getByServiceId(serviceId,PageRequest.of(pageNum, pageSize)
+                .getByServiceId(serviceId, PageRequest.of(pageNum, pageSize)
                         .withSort(Sort.by(Sort.Order.by(sortField))));
 
         ApiResponse resp = ApiResponse.builder()
@@ -80,8 +89,8 @@ public class SubmissionControl {
     @Operation(description = "Endpoint to get all submissions done by a customer")
     public ResponseEntity<ApiResponse> getByCustomer(@RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
                                                      @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
-                                                     @PathVariable Long customerId){
-        List<Submission> sub  = service.getByCustomerId(customerId,PageRequest.of(pageNum, pageSize));
+                                                     @PathVariable Long customerId) {
+        List<Submission> sub = service.getByCustomerId(customerId, PageRequest.of(pageNum, pageSize));
 
         ApiResponse resp = ApiResponse.builder()
                 .status(HttpStatus.OK)

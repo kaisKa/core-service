@@ -41,8 +41,20 @@ springdoc:
       path: /swagger-ui.html
       enabled: true
 
+application:
+  security:
+    jwt:  # this should e store in more secure way in production like AWS keystore
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
 
 
+logging:
+  level:
+    org:
+      springframework:
+        security=DEBUG:
 
 
 # add logging later on

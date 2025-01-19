@@ -1,26 +1,29 @@
 package com.core.Core.Service.data_submission.costomer;
 
+import com.core.Core.Service.config.JwtService;
+import com.core.Core.Service.data_submission.auth.AuthenticationRequest;
+import com.core.Core.Service.data_submission.auth.AuthenticationResponse;
 import com.core.Core.Service.exceptions.NotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
     private final CustomerRepository repository;
     private final ObjectMapper objectMapper;
-
-    public CustomerService(CustomerRepository repository, ObjectMapper objectMapper) {
-        this.repository = repository;
-        this.objectMapper = objectMapper;
-    }
-
-
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
     public List<Customer> getAll() {
         return this.repository.findAll();
     }
@@ -33,6 +36,13 @@ public class CustomerService {
         var op = this.repository.findById(id);
         if (op.isEmpty())
             throw new NotFoundException("Customer " + id + " Not found");
+        else return op.get();
+    }
+
+    public Customer getByEmail(String email) {
+        var op = this.repository.findByEmail(email);
+        if (op.isEmpty())
+            throw new NotFoundException("Customer " + email + " Not found");
         else return op.get();
     }
 
@@ -61,10 +71,21 @@ public class CustomerService {
     }
 
 
-    public Customer create(Customer cust) {
-
-        return this.repository.save(cust);
-    }
-
-
+//    public Customer create(Customer cust) {
+//
+//        cust.setPassword(passwordEncoder.encode(cust.getPassword()));
+//        cust.setRole(Role.USER);
+//        return this.repository.save(cust);
+//    }
+//
+//
+//    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+//       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+//
+//       var user = getByEmail(request.getEmail());
+//       var jwtToken = jwtService.generateToken(user);
+//       return AuthenticationResponse.builder()
+//               .Token(jwtToken)
+//               .build();
+//    }
 }

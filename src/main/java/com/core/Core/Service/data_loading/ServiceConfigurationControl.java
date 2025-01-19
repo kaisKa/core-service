@@ -3,6 +3,8 @@ package com.core.Core.Service.data_loading;
 
 import com.core.Core.Service.common.dto.ApiResponse;
 import com.core.Core.Service.data_loading.document.ServiceConfiguration;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,8 @@ public class ServiceConfigurationControl {
 
 
     @GetMapping
+    @Operation(description = "Endpoint to get all configuration")
+    @SecurityRequirement(name = "BearerAuth")
     public ResponseEntity<ApiResponse> getAll(){
         List<ServiceConfiguration> configs = service.getAll();
 
@@ -38,6 +42,8 @@ public class ServiceConfigurationControl {
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Endpoint to get a configuration id ")
+    @SecurityRequirement(name = "BearerAuth")
     public ResponseEntity<ApiResponse> getById(@PathVariable BigInteger id ){
 
         ServiceConfiguration configs = service.getById(id);

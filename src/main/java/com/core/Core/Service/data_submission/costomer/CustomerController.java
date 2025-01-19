@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-@RestController
+//@RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
 
@@ -44,11 +44,11 @@ public class CustomerController {
         return ResponseEntity.ok().body(this.service.getById(id));
     }
 
-    @PostMapping()
-    @Operation(description = "Endpoint to create a new custloyee")
-    public ResponseEntity<Customer> create(@Valid @RequestBody  Customer cust) {
-        return ResponseEntity.created(URI.create("/api/customer")).body(this.service.create(cust));
-    }
+//    @PostMapping()
+//    @Operation(description = "Endpoint to create a new custloyee")
+//    public ResponseEntity<Customer> create(@Valid @RequestBody  Customer cust) {
+//        return ResponseEntity.created(URI.create("/api/customer")).body(this.service.create(cust));
+//    }
 
 
     @PutMapping()
