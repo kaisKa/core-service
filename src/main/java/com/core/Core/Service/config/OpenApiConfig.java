@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(
                 title = "Core Service",
                 version = "1.0",
-                description = "API Documentation with Security"
+                description = "API Documentation For Core Service Endpoints"
         )
 )
 @SecurityScheme(

@@ -50,4 +50,13 @@ public class AuthService {
                 .Token(jwtToken)
                 .build();
     }
+
+
+    public ValidationResponse validate(String authorizationHeader) {
+        String token = authorizationHeader.substring(7); // Remove "Bearer "
+        if (jwtService.isTokenValid(token, jwtService.extractUsername(token))) {
+            return ValidationResponse.builder().isValid(true).message("Token is valid").build();
+        }
+        return ValidationResponse.builder().isValid(true).message("Invalid token").build();
+    }
 }

@@ -106,6 +106,20 @@ http://localhost:7777/swagger-ui.html
 - **Authenticate User**
     - `POST /api/auth/authenticate`
 
+## Sample of submission
+```
+{
+  "serviceId": 101,
+  "customerId": 1,
+  "submittedData": {
+    "amount": 1000,  
+    "bank_account_number": "AB1234567890 XYZ",
+    "firstname": "kais",  
+    "lastname": "Alkotamy"  
+  }
+}
+```
+
 ## Configuration
 
 ### Environment Variables

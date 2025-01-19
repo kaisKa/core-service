@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "11463147-aa44-4028-8639-783c9f739f04",
+		"_postman_id": "9bc99ae4-7b81-43e2-b8c5-3deb680656a1",
 		"name": "Core Service",
-		"description": "API Documentation with Security",
+		"description": "API Documentation For Core Service Endpoints",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "6197235"
 	},
@@ -141,7 +141,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"customerId\": \"<long>\",\n  \"serviceId\": \"<integer>\",\n  \"submittedData\": {\n    \"in4\": \"<string>\",\n    \"nostrud_b\": \"<string>\"\n  }\n}",
+									"raw": "{\n  \"customerId\": \"<long>\",\n  \"serviceId\": \"<integer>\",\n  \"submittedData\": {\n    \"nisif45\": \"<string>\"\n  }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -178,7 +178,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"customerId\": \"<long>\",\n  \"serviceId\": \"<integer>\",\n  \"submittedData\": {\n    \"in4\": \"<string>\",\n    \"nostrud_b\": \"<string>\"\n  }\n}",
+											"raw": "{\n  \"customerId\": \"<long>\",\n  \"serviceId\": \"<integer>\",\n  \"submittedData\": {\n    \"nisif45\": \"<string>\"\n  }\n}",
 											"options": {
 												"raw": {
 													"language": "json"

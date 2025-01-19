@@ -4,6 +4,7 @@ import com.core.Core.Service.common.dto.ApiResponse;
 import com.core.Core.Service.data_submission.costomer.Customer;
 import com.core.Core.Service.data_submission.costomer.CustomerDto;
 import com.core.Core.Service.data_submission.costomer.CustomerService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,20 @@ public class AutheticationController {
 
         return new ResponseEntity<>(resp,
                 resp.getStatus());
+    }
+
+    /**
+     * validate token method used by other service to validate the passed token
+     * @param authorizationHeader
+     * @return
+     */
+    @Hidden
+    @GetMapping("/validate-token")
+    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String authorizationHeader) {
+
+        ValidationResponse resp = service.validate(authorizationHeader);
+        return new ResponseEntity<>(resp.getMessage(),
+                resp.isValid() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED);
+
     }
 }
