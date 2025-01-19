@@ -1,8 +1,6 @@
 package com.core.Core.Service.config;
 
-import com.core.Core.Service.data_submission.costomer.Customer;
 import com.core.Core.Service.data_submission.costomer.CustomerRepository;
-import com.core.Core.Service.data_submission.costomer.CustomerService;
 import com.core.Core.Service.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,12 +9,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
@@ -43,5 +39,14 @@ public class ApplicationConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public FilterRegistrationBean<AccessLoggingFilter> loggingFilter() {
+        FilterRegistrationBean<AccessLoggingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new AccessLoggingFilter());
+        registrationBean.addUrlPatterns("/api/*");
+        registrationBean.setOrder(4);// Apply to specific URL patterns, or use "/*" for all URLs
+        return registrationBean;
     }
 }
