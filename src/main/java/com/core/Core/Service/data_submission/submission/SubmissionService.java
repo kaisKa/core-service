@@ -1,6 +1,8 @@
 package com.core.Core.Service.data_submission.submission;
 
 import com.core.Core.Service.data_submission.costomer.CustomerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,26 +12,21 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 
 @Service
 @Log4j2
+@RequiredArgsConstructor
 public class SubmissionService {
 
     private final SubmissionRepository repository;
-
     private final CustomerService service;
-
     private final KafkaTemplate kafkaTemplate;
 
+    private final ObjectMapper objectMapper;
     private String TOPIC = "submissions";
 
-    public SubmissionService(SubmissionRepository repository, CustomerService service, KafkaTemplate kafkaTemplate) {
-        this.repository = repository;
-        this.service = service;
-        this.kafkaTemplate = kafkaTemplate;
-    }
+
 
     /**
      * 1. load the service config <br>
@@ -39,7 +36,7 @@ public class SubmissionService {
      * @param submissionDto
      * @return
      */
-    public Submission submit(SubmissionDto submissionDto) {
+    public SubmissionDto submit(SubmissionDto submissionDto) {
 
         //TODO: customer id should be getting from the jwt
         var cust = service.getById(submissionDto.getCustomerId());
@@ -56,12 +53,14 @@ public class SubmissionService {
             kafkaTemplate.send(TOPIC,savedSub.getServiceId().toString(),savedSub).whenComplete((d,a) -> log.info("Event published {}",savedSub));
 
         }
-        return savedSub;
+        return convertToDto(savedSub);
 
     }
 
-    public Page<Submission> getAll(Pageable page) {
-        return repository.findAll(page);
+    public Page<SubmissionDto> getAll(Pageable page) {
+
+
+        return repository.findAll(page).map(this::convertToDto);
     }
 
     public List<Submission> getByServiceId(BigInteger serviceId,Pageable page) {
@@ -74,6 +73,9 @@ public class SubmissionService {
         return repository.findByCustomerId(customerId,page);
     }
 
+    private SubmissionDto convertToDto(Submission submission) {
+        return objectMapper.convertValue(submission, SubmissionDto.class);
+    }
 
 
 }

@@ -30,7 +30,7 @@ public class SubmissionController {
     @SecurityRequirement(name = "BearerAuth")
     public ResponseEntity<ApiResponse> submit(@Valid @RequestBody SubmissionDto submissionDto) {
 
-        Submission sub = service.submit(submissionDto);
+        SubmissionDto sub = service.submit(submissionDto);
 
         ApiResponse resp = ApiResponse.builder()
                 .status(HttpStatus.OK)
@@ -52,7 +52,7 @@ public class SubmissionController {
         if (sortField != null)
             page.withSort(Sort.by(Sort.Order.by(sortField)));
 
-        Page<Submission> submissions = service.getAll(page);
+        Page<SubmissionDto> submissions = service.getAll(page);
 
         ApiResponse resp = ApiResponse.builder()
                 .status(HttpStatus.OK)

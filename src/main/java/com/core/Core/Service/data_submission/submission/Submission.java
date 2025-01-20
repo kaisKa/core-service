@@ -42,4 +42,13 @@ public class Submission {
     @ManyToOne
     @JoinColumn(name = "CUST_ID")
     private Customer customer;
+
+
+//    public static SubmissionDto toDto(Submission submission) {
+//        return SubmissionDto.builder()
+//                .serviceId(submission.getServiceId())
+//                .customerId(submission.getCustomerId())
+//                .submittedData(submission.getSubmittedData())
+//                .build();
+//    }
 }
