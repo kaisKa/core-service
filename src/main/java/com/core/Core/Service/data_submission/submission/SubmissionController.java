@@ -72,9 +72,12 @@ public class SubmissionController {
             @RequestParam(required = false) @Parameter(required = false, description = "add the field name to sort by") String sortField,
             @PathVariable BigInteger serviceId) {
 
-        List<Submission> sub = service
-                .getByServiceId(serviceId, PageRequest.of(pageNum, pageSize)
-                        .withSort(Sort.by(Sort.Order.by(sortField))));
+        var page = PageRequest.of(pageNum, pageSize);
+        if (sortField != null)
+            page.withSort(Sort.by(Sort.Order.by(sortField)));
+
+        List<SubmissionDto> sub = service
+                .getByServiceId(serviceId, page);
 
         ApiResponse resp = ApiResponse.builder()
                 .status(HttpStatus.OK)
@@ -87,10 +90,11 @@ public class SubmissionController {
 
     @GetMapping("/customer/{customerId}")
     @Operation(description = "Endpoint to get all submissions done by a customer")
+    @SecurityRequirement(name = "BearerAuth")
     public ResponseEntity<ApiResponse> getByCustomer(@RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
                                                      @RequestParam(name = "pageSize", defaultValue = "10") int pageSize,
                                                      @PathVariable Long customerId) {
-        List<Submission> sub = service.getByCustomerId(customerId, PageRequest.of(pageNum, pageSize));
+        List<SubmissionDto> sub = service.getByCustomerId(customerId, PageRequest.of(pageNum, pageSize));
 
         ApiResponse resp = ApiResponse.builder()
                 .status(HttpStatus.OK)

@@ -63,14 +63,14 @@ public class SubmissionService {
         return repository.findAll(page).map(this::convertToDto);
     }
 
-    public List<Submission> getByServiceId(BigInteger serviceId,Pageable page) {
+    public List<SubmissionDto> getByServiceId(BigInteger serviceId,Pageable page) {
 
-        return repository.findByServiceId(serviceId,page);
+        return repository.findByServiceId(serviceId,page).stream().map(this::convertToDto).toList();
     }
 
-    public List<Submission> getByCustomerId(Long customerId,Pageable page) {
+    public List<SubmissionDto> getByCustomerId(Long customerId, Pageable page) {
 
-        return repository.findByCustomerId(customerId,page);
+        return repository.findByCustomerId(customerId,page).stream().map(this::convertToDto).toList();
     }
 
     private SubmissionDto convertToDto(Submission submission) {
