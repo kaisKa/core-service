@@ -5,8 +5,8 @@ spring:
   datasource:
     postgresql:
       jdbc-url: jdbc:postgresql://localhost:5432/mydb
-      username: user
-      password: password
+      username: ${ENV_POSTGRES_USER:user}
+      password: ${ENV_POSTGRES_PASSWORD:password}
       driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -17,21 +17,7 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-  # MongoDB Configuration
-#  data:
-#    mongodb:
-##      uri: mongodb://admin:password@localhost:27017/configdb?authSource=admin
-#      host: localhost
-#      port: 27017
-#      database: configdb
-#      username: admin
-#      password: password
-#      authentication-database: configdb
 
-
-
-#    database: configdb
-#    authentication-database: admin
 springdoc:
   openapi:
     api-docs:
@@ -43,11 +29,11 @@ springdoc:
 
 application:
   security:
-    jwt:  # this should e store in more secure way in production like AWS keystore
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-      expiration: 86400000
+    jwt:  # this should e store in more secure way in production like AWS keystore or env
+      secret-key: ${ENV_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      expiration: ${ENV_TOKEN_EXPIRATION:86400000}
       refresh-token:
-        expiration: 604800000
+        expiration: ${ENV_TOKEN_REFRESH:604800000}
 
 
 #logging:

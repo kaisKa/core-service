@@ -124,14 +124,13 @@ http://localhost:7777/swagger-ui.html
 
 ### Environment Variables
 
-| Variable             | Description                  | Default Value       |
-|----------------------|------------------------------|---------------------|
-| `JWT_SECRET`         | Secret key for JWT          | `your_jwt_secret`   |
-| `SPRING_PROFILES`    | Spring profiles (e.g., dev) | `dev`               |
-| `POSTGRES_HOST`      | PostgreSQL hostname         | `localhost`         |
-| `POSTGRES_PORT`      | PostgreSQL port             | `5432`              |
-| `MONGO_HOST`         | MongoDB hostname            | `localhost`         |
-| `MONGO_PORT`         | MongoDB port                | `27017`             |
+| Variable        | Description         | Default Value     |
+|-----------------|---------------------|-------------------|
+| `ENV_SECRET_KEY`    | Secret key for JWT  | `application.yml` |
+| `ENV_POSTGRES_USER` | PostgreSQL user     | `user`            |
+| `ENV_POSTGRES_PASSWORD` | PostgreSQL password | `password`        |
+| `ENV_TOKEN_EXPIRATION`    | Token Expiration    | `86400000`       |
+| `ENV_TOKEN_REFRESH`    | Token Refresh       | `604800000`           |
 
 ## Dependencies
 
